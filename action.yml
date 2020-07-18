@@ -1,10 +1,16 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Query Issues Output'
+description: 'Executes a query to output a set of Issues to disk for processing'
+author: 'Christopher Scott (christothes)'
 inputs:
-  milliseconds:           # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  milestone:
+    description: 'Filter to Issues associated to a milestone number or name. Specify * to indicate all Issues associated with any Milestone
+    default: 'null'
+  state:
+    description: 'Filter to Issues in the given state. (open, closed, *)'
+    default: 'null'
+  notmodifiedfor:
+    description: 'Filter to Issues not modified in the last n minutes'
+    default: 'null'
 runs:
   using: 'node12'
   main: 'dist/index.js'
