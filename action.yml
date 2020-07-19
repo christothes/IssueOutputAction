@@ -2,11 +2,14 @@ name: 'Query Issues Output'
 description: 'Executes a query to output a set of Issues to disk for processing'
 author: 'Christopher Scott (christothes)'
 inputs:
+  repo-token:
+    description: 'The repo GITHUB_TOKEN'
+    default: 'null'
   milestone:
     description: 'Filter to Issues associated to a milestone number or name. Specify * to indicate all Issues associated with any Milestone'
     default: 'null'
   state:
-    description: 'Filter to Issues in the given state. (open, closed, *)'
+    description: 'Filter to Issues in the given state. (open, closed, or all)'
     default: 'open'
   notmodifiedfor:
     description: 'Filter to Issues not modified in the last n minutes'
