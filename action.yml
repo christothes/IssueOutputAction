@@ -2,7 +2,7 @@ name: 'Query Issues Output'
 description: 'Executes a query to output a set of Issues to disk for processing'
 author: 'Christopher Scott (christothes)'
 inputs:
-  repo-token:
+  repotoken:
     description: 'The repo GITHUB_TOKEN'
     default: 'null'
   milestone:
