@@ -2,8 +2,11 @@ name: 'Query Issues Output'
 description: 'Executes a query to output a set of Issues to disk for processing'
 author: 'Christopher Scott (christothes)'
 inputs:
+  milliseconds:
+    description: 'milliseconds'
+    default: '50'
   milestone:
-    description: 'Filter to Issues associated to a milestone number or name. Specify * to indicate all Issues associated with any Milestone
+    description: 'Filter to Issues associated to a milestone number or name. Specify * to indicate all Issues associated with any Milestone'
     default: 'null'
   state:
     description: 'Filter to Issues in the given state. (open, closed, *)'
