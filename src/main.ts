@@ -21,25 +21,26 @@ async function run(): Promise<void> {
 
       const gh = octokit.getOctokit(core.getInput('repotoken'));
 
-      var i = await gh.search.issuesAndPullRequests({
+      const i = await gh.search.issuesAndPullRequests({
         q: `milestone:"${milestone}" repo:christothes/IssueOutputAction`
       });
 
-      core.debug('search issues: (' + i.status.toString() + ') ' + i.data.total_count.toString() + ' results');
-      i.data.items.forEach(issue => {
+      core.debug(`search issues: (${i.status}) ${i.data.total_count} results`);
+      for (let index = 0; index < i.data.items.length; index++) {
+        const issue = i.data.items[index];
         core.debug(`${JSON.stringify(issue.html_url)}`);
         fs.writeFileSync(path.join('.', 'issues', `${issue.number}.json`), JSON.stringify(issue))
-      });
+      }
 
-      var ms = await gh.issues.getMilestone({
+      const ms = await gh.issues.getMilestone({
         milestone_number: 1,
         owner: 'christothes',
         repo: 'IssueOutputAction'
       });
 
       core.debug(ms.data.title);
-      core.debug(ms.data.open_issues.toString() + ' open issues.');
-      
+      core.debug(`${ms.data.open_issues} open issues.`);
+
       await wait(10);
     } catch (err)
     {
