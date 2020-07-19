@@ -26,8 +26,8 @@ async function run(): Promise<void> {
       });
 
       core.debug(`search issues: (${i.status}) ${i.data.total_count} results`);
-      for (let index = 0; index < i.data.items.length; index++) {
-        const issue = i.data.items[index];
+
+      for (const issue of i.data.items) {
         core.debug(`${JSON.stringify(issue.html_url)}`);
         fs.writeFileSync(path.join('.', 'issues', `${issue.number}.json`), JSON.stringify(issue))
       }
