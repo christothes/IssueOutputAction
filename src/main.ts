@@ -3,14 +3,21 @@ import {wait} from './wait'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    const milestone: string = core.getInput('milestone')
+    core.debug(`Filtering on milestone: ${milestone}.`)
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const state: string = core.getInput('state')
+    core.debug(`Filtering on state: ${state}.`)
 
-    core.setOutput('time', new Date().toTimeString())
+    const notmodifiedfor: string = core.getInput('notmodifiedfor')
+    core.debug(`Filtering on notmodifiedfor: ${notmodifiedfor}.`)
+
+
+    core.debug(new Date().toTimeString());
+    await wait(1);
+    core.debug(new Date().toTimeString());
+
+    core.setOutput('time', new Date().toTimeString());
   } catch (error) {
     core.setFailed(error.message)
   }
