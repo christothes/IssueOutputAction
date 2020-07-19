@@ -14,7 +14,7 @@ async function run(): Promise<void> {
 
 
     core.debug(new Date().toTimeString());
-    //await wait(10);
+    await wait(10);
     core.debug(new Date().toTimeString());
 
     core.setOutput('time', new Date().toTimeString());
