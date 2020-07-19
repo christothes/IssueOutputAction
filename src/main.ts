@@ -4,6 +4,7 @@ import * as io from '@actions/io'
 import { wait } from './wait'
 import * as fs from 'fs'
 import * as path from 'path'
+import * as process from 'process'
 
 async function run(): Promise<void> {
   try {
@@ -17,7 +18,7 @@ async function run(): Promise<void> {
       const notmodifiedfor: string = core.getInput('notmodifiedfor')
       core.debug(`Filtering on notmodifiedfor: ${notmodifiedfor}.`)
 
-      core.debug(`${process.env['GITHUB_TOKEN']}`);
+      core.debug(`GITHUB_TOKEN=${process.env['GITHUB_TOKEN']}`);
 
       io.mkdirP(path.join('.', 'issues'));
 
