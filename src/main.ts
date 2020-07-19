@@ -19,7 +19,8 @@ async function run(): Promise<void> {
 
       io.mkdirP(path.join('.', 'issues'));
 
-      const gh = octokit.getOctokit(core.getInput('repotoken'));
+      const token = core.getInput('repotoken', {required: true});
+      const gh = octokit.getOctokit(token);
 
       const i = await gh.search.issuesAndPullRequests({
         q: `milestone:"${milestone}" repo:christothes/IssueOutputAction`
