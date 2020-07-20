@@ -4,7 +4,6 @@ import * as io from '@actions/io'
 import { wait } from './wait'
 import * as fs from 'fs'
 import * as path from 'path'
-import * as process from 'process'
 
 async function run(): Promise<void> {
   try {
@@ -20,9 +19,7 @@ async function run(): Promise<void> {
 
       io.mkdirP(path.join('.', 'issues'));
 
-      core.debug(`GITHUB_TOKEN=${process.env['GITHUB_TOKEN']}`);
-      
-      const token = core.getInput('repotoken', {required: true});
+      const token = core.getInput('token', {required: true});
       const gh = octokit.getOctokit(token);
 
       const i = await gh.search.issuesAndPullRequests({

@@ -5698,13 +5698,6 @@ module.exports = require("zlib");
 
 /***/ }),
 
-/***/ 765:
-/***/ (function(module) {
-
-module.exports = require("process");
-
-/***/ }),
-
 /***/ 835:
 /***/ (function(module) {
 
@@ -5752,7 +5745,6 @@ const io = __importStar(__webpack_require__(337));
 const wait_1 = __webpack_require__(13);
 const fs = __importStar(__webpack_require__(747));
 const path = __importStar(__webpack_require__(622));
-const process = __importStar(__webpack_require__(765));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -5764,8 +5756,7 @@ function run() {
                 const notmodifiedfor = core.getInput('notmodifiedfor');
                 core.debug(`Filtering on notmodifiedfor: ${notmodifiedfor}.`);
                 io.mkdirP(path.join('.', 'issues'));
-                core.debug(`GITHUB_TOKEN=${process.env['GITHUB_TOKEN']}`);
-                const token = core.getInput('repotoken', { required: true });
+                const token = core.getInput('token', { required: true });
                 const gh = octokit.getOctokit(token);
                 const i = yield gh.search.issuesAndPullRequests({
                     q: `milestone:"${milestone}" repo:christothes/IssueOutputAction`
