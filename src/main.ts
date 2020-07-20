@@ -4,7 +4,6 @@ import * as io from '@actions/io'
 import { wait } from './wait'
 import * as fs from 'fs'
 import * as path from 'path'
-import * as process from 'process'
 
 async function run(): Promise<void> {
   try {
