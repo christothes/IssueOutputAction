@@ -25,6 +25,7 @@
   "author": "Christopher Scott",
   "license": "MIT",
   "dependencies": {
+    "@actions/artifact": "^0.3.2",
     "@actions/core": "^1.2.0",
     "@actions/github": "^4.0.0",
     "@actions/io": "^1.0.2"
