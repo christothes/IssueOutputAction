@@ -21,6 +21,7 @@ async function run(): Promise<void> {
       io.mkdirP(path.join('.', 'issues'));
 
       core.debug(`GITHUB_TOKEN=${process.env['GITHUB_TOKEN']}`);
+      
       const token = core.getInput('repotoken', {required: true});
       const gh = octokit.getOctokit(token);
 
