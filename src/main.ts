@@ -18,8 +18,6 @@ async function run(): Promise<void> {
       const notmodifiedfor: string = core.getInput('notmodifiedfor')
       core.debug(`Filtering on notmodifiedfor: ${notmodifiedfor}.`)
 
-      core.debug(`GH_TOKEN=${process.env['GH_TOKEN']}`);
-
       io.mkdirP(path.join('.', 'issues'));
 
       const token = core.getInput('repotoken', {required: true});
