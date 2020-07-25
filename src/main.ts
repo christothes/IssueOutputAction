@@ -54,8 +54,9 @@ async function run(): Promise<void> {
 
       await artifactClient.downloadArtifact(artifactName, issuesDownloadDirPath);
       for (const fileName of fs.readdirSync(issuesDownloadDirPath)) {
-        core.debug(`Found file: ${path.join(issuesDownloadDirPath, fileName)}`);
-        const f = fs.readFileSync(fileName, "utf8");
+        const filePath = path.join(issuesDownloadDirPath, fileName);
+        core.debug(`Found file: ${filePath}`);
+        const f = fs.readFileSync(filePath, "utf8");
         const issue = JSON.parse(f);
         core.debug(`Containing Issue: ${issue.number}:${issue.title}`);
       }
