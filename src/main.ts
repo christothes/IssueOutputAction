@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as octokit from '@actions/github'
+import * as OctokitTypes from "@octokit/types";
 import * as io from '@actions/io'
 import * as artifact from '@actions/artifact'
 import { wait } from './wait'
@@ -54,7 +55,11 @@ async function run(): Promise<void> {
       await artifactClient.downloadArtifact(artifactName, issuesDownloadDirPath);
       for (const fileName of fs.readdirSync(issuesDownloadDirPath)) {
         core.debug(`Found file: ${path.join(issuesDownloadDirPath, fileName)}`);
+        const f = fs.readFileSync(fileName,  "utf8");
+        const issue = JSON.parse(f);
+        core.debug(`Containing Issue: ${issue.number}:${issue.title}`);
       }
+
 
       // const ms = await gh.issues.getMilestone({
       //   milestone_number: 1,
