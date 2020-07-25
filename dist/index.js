@@ -12092,18 +12092,16 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             try {
-                const milestone = core.getInput('milestone');
-                core.debug(`Filtering on milestone: ${milestone}..`);
-                const state = core.getInput('state');
-                core.debug(`Filtering on state: ${state}.`);
-                const notmodifiedfor = core.getInput('notmodifiedfor');
-                core.debug(`Filtering on notmodifiedfor: ${notmodifiedfor}.`);
+                const searchQuery = core.getInput('searchquery');
+                core.debug(`Searaching issues with query: ${searchQuery}`);
                 const issuesDirPath = path.join('.', 'issues');
                 io.mkdirP(issuesDirPath);
+                const issuesDownloadDirPath = path.join('.', 'issues_download');
+                io.mkdirP(issuesDownloadDirPath);
                 const token = core.getInput('repotoken', { required: true });
                 const gh = octokit.getOctokit(token);
                 const i = yield gh.search.issuesAndPullRequests({
-                    q: `milestone:"${milestone}" repo:christothes/IssueOutputAction`
+                    q: searchQuery
                 });
                 core.debug(`search issues: (${i.status}) ${i.data.total_count} results`);
                 const files = [];
@@ -12113,21 +12111,28 @@ function run() {
                     fs.writeFileSync(filePath, JSON.stringify(issue));
                     files.push(filePath);
                 }
+                for (const fileName of fs.readdirSync(issuesDirPath)) {
+                    core.debug(`Wrote file: ${path.join(issuesDirPath, fileName)}`);
+                }
                 const artifactClient = artifact.create();
-                const artifactName = `issueoutput${process.env['GITHUB_RUN_ID']}`;
+                const artifactName = `issueoutput_${process.env['GITHUB_RUN_ID']}`;
                 const rootDirectory = issuesDirPath;
                 const options = {
                     continueOnError: true
                 };
                 const uploadResult = yield artifactClient.uploadArtifact(artifactName, files, rootDirectory, options);
                 core.debug(`uploaded ${uploadResult.artifactItems.length} artifacts...`);
-                const ms = yield gh.issues.getMilestone({
-                    milestone_number: 1,
-                    owner: 'christothes',
-                    repo: 'IssueOutputAction'
-                });
-                core.debug(ms.data.title);
-                core.debug(`${ms.data.open_issues} open issues.`);
+                yield artifactClient.downloadArtifact(artifactName, issuesDownloadDirPath);
+                for (const fileName of fs.readdirSync(issuesDownloadDirPath)) {
+                    core.debug(`Found file: ${path.join(issuesDownloadDirPath, fileName)}`);
+                }
+                // const ms = await gh.issues.getMilestone({
+                //   milestone_number: 1,
+                //   owner: 'christothes',
+                //   repo: 'IssueOutputAction'
+                // });
+                // core.debug(ms.data.title);
+                // core.debug(`${ms.data.open_issues} open issues.`);
                 yield wait_1.wait(10);
             }
             catch (err) {

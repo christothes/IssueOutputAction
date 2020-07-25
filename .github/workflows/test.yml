@@ -21,4 +21,4 @@ jobs:
     - uses: ./
       with: 
         repotoken: ${{ secrets.GITHUB_TOKEN }}
-        milestone: 'August Release'
+        searchquery: 'milestone:"August Release" repo:christothes/IssueOutputAction'

@@ -19,7 +19,7 @@ test('wait 500 ms', async () => {
 
 // shows how the runner will run a javascript action with env / stdout protocol
 test('test runs', () => {
-  process.env['INPUT_MILESTONE'] = 'August Release'
+  process.env['INPUT_SEARCHQUERY'] = 'milestone:"August Release" repo:christothes/IssueOutputAction'
   const ip = path.join(__dirname, '..', 'lib', 'main.js')
   const options: cp.ExecSyncOptions = {
     env: process.env
