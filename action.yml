@@ -1,6 +1,9 @@
 name: 'Query Issues Output'
 description: 'Searches Issues based on configured criteria and outputs the results as json per issue into an Artifact. Stacks with other actions that expect a set of Issues as an Artifact.'
 author: 'Christopher Scott (christothes)'
+branding:
+  icon: 'arrow-down-right'
+  color: 'blue'
 inputs:
   repotoken:
     description: 'The github API token, if not he default'
