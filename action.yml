@@ -1,13 +1,13 @@
 name: 'Query Issues Output'
-description: 'Executes a query to output a set of Issues to disk for processing'
+description: 'Searches Issues based on configured criteria and outputs the results as json per issue into an Artifact. Stacks with other actions that expect a set of Issues as an Artifact.'
 author: 'Christopher Scott (christothes)'
 inputs:
   repotoken:
     description: 'The github API token, if not he default'
-    default: ''
+    required: true
   repoOwnerAndName:
     description: ''
-    default: '${{ github.repository }}'
+    required: true
   searchquery:
     description: 'A query to search for Issues. See https://docs.github.com/en/github/searching-for-information-on-github/searching-issues-and-pull-requests'
     default: ''
