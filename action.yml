@@ -1,6 +1,8 @@
 name: 'Query Issues Output'
 description: 'Executes a query to output a set of Issues to disk for processing'
 author: 'Christopher Scott (christothes)'
+icon: 'arrow-down-right'
+color: 'blue'
 inputs:
   repotoken:
     description: 'The github API token, if not he default'
