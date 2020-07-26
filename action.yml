@@ -3,9 +3,19 @@ description: 'Executes a query to output a set of Issues to disk for processing'
 author: 'Christopher Scott (christothes)'
 inputs:
   repotoken:
-    description: 'The repo GITHUB_TOKEN'
-  searchQuery:
-    description: 'The query to search for Issues. See https://docs.github.com/en/github/searching-for-information-on-github/searching-issues-and-pull-requests'
+    description: 'The github API token, if not he default'
+    default: ${{ secrets.GITHUB_TOKEN }}
+  repoOwnerAndName:
+    description: ''
+    default: '${{ github.repository }}'
+  searchquery:
+    description: 'A query to search for Issues. See https://docs.github.com/en/github/searching-for-information-on-github/searching-issues-and-pull-requests'
+    default: ''
+  searchByAssociatedMilestoneState:
+    description: 'Filters queried Issues to those associated with Milestones in a given state: <open|closed|all> .'
+    default: ''
+  searchByAssociatedMilestoneDueDate:
+    description: 'Filters queried to those associated with Milestones with a due date either past due, due today, or due in the future: <past|today|future> .'
     default: ''
 runs:
   using: 'node12'
