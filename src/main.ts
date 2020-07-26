@@ -73,7 +73,7 @@ async function run(): Promise<void> {
           repo: ownerAndName[1]
         });
 
-        let now = new Date();
+        const now = new Date();
 
         for (const milestone of azMilestones.data) {
           if (milestoneDueOn) {
