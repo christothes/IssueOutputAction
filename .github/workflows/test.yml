@@ -20,5 +20,8 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./
       with: 
-        token: ${{ secrets.GITHUB_TOKEN }}
-        milestone: 'August Release'
+        repotoken: ${{ secrets.GITHUB_TOKEN }}
+        searchquery: 'event hubs is:open'
+        repoOwnerAndName: 'Azure/azure-sdk-for-net'
+        searchByAssociatedMilestoneState: 'open'
+        searchByAssociatedMilestoneDueDate: 'future'
