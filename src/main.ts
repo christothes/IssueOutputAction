@@ -176,6 +176,9 @@ async function queryIssues(resultingQuery: string, ownerAndName: string, mileton
   while (isIncomplete) {
     const issueResults = await axios.default.get('https://api.github.com/search/issues',
       {
+        headers:{
+          Auth: token
+        },
         params: {
           q: resultingQuery,
           page: pageNum

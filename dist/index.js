@@ -20892,6 +20892,9 @@ function queryIssues(resultingQuery, ownerAndName, miletoneOptionsSpecified, tok
         var itemsReceived = 0;
         while (isIncomplete) {
             const issueResults = yield axios.default.get('https://api.github.com/search/issues', {
+                headers: {
+                    Auth: token
+                },
                 params: {
                     q: resultingQuery,
                     page: pageNum

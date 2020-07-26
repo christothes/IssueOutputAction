@@ -21,5 +21,7 @@ jobs:
     - uses: ./
       with: 
         repotoken: ${{ secrets.GITHUB_TOKEN }}
-        searchquery: 'event hubs milestone:"August Release"'
+        searchquery: 'event hubs is:open'
         repoOwnerAndName: 'Azure/azure-sdk-for-net'
+        searchByAssociatedMilestoneState: 'open'
+        searchByAssociatedMilestoneDueDate: 'future'
