@@ -57,6 +57,9 @@ async function run(): Promise<void> {
       core.debug(`Filtering issues with milestoneDueOn: ${milestoneDueOn}`);
 
       const miletoneOptionsSpecified = milestoneDueOn || milestoneState;
+      if (!miletoneOptionsSpecified && searchQuery.length === 0) {
+        core.setFailed('Must specify at least one search or milesone filter input.');
+      }
 
       const token = core.getInput('repotoken', { required: true });
       const gh = octokit.getOctokit(token);
@@ -109,8 +112,6 @@ async function run(): Promise<void> {
         await queryIssues(queryWithoutMilestones, repoOwnerAndName, token, issues);
       }
 
-
-
       // Handle artifacts
       const issuesDirPath = path.join('.', 'issues');
       try {
@@ -151,7 +152,7 @@ async function run(): Promise<void> {
 
 run()
 
-async function queryIssues(resultingQuery: string, ownerAndName: string, token: string, issues: {}[]) : Promise<void> {
+async function queryIssues(resultingQuery: string, ownerAndName: string, token: string, issues: any[]) : Promise<void> {
 
   core.debug(`resultingQuery: ${resultingQuery}.`);
 
