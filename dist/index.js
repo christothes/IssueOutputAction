@@ -20753,7 +20753,7 @@ function run() {
                     return;
                 }
                 const milestoneStateTmp = core.getInput('searchByAssociatedMilestoneState');
-                var milestoneState;
+                let milestoneState;
                 switch (milestoneStateTmp) {
                     case "all":
                         milestoneState = "all";
@@ -20770,7 +20770,7 @@ function run() {
                 ;
                 core.debug(`Filtering issues with milestoneState: ${milestoneState}`);
                 const milestoneDueOnTmp = core.getInput('searchByAssociatedMilestoneDueDate');
-                var milestoneDueOn;
+                let milestoneDueOn;
                 switch (milestoneDueOnTmp) {
                     case "past":
                         milestoneDueOn = "past";
@@ -20798,23 +20798,23 @@ function run() {
                         owner: ownerAndName[0],
                         repo: ownerAndName[1]
                     });
-                    var now = new Date();
+                    let now = new Date();
                     for (const milestone of azMilestones.data) {
                         if (milestoneDueOn) {
-                            const due_on = milestone.due_on ? new Date(milestone.due_on) : undefined;
+                            const dueOn = milestone.due_on ? new Date(milestone.due_on) : undefined;
                             switch (milestoneDueOn) {
                                 case "future":
-                                    if (!due_on || !moment_1.default(due_on).isAfter(now, 'day')) {
+                                    if (!dueOn || !moment_1.default(dueOn).isAfter(now, 'day')) {
                                         continue;
                                     }
                                     break;
                                 case "past":
-                                    if (!due_on || !moment_1.default(due_on).isBefore(now, 'day')) {
+                                    if (!dueOn || !moment_1.default(dueOn).isBefore(now, 'day')) {
                                         continue;
                                     }
                                     break;
                                 case "today":
-                                    if (!due_on || !moment_1.default(due_on).isSame(now, 'day')) {
+                                    if (!dueOn || !moment_1.default(dueOn).isSame(now, 'day')) {
                                         continue;
                                     }
                                     break;
@@ -20824,13 +20824,13 @@ function run() {
                         }
                         core.debug(`Searching Issues related to Milestone: ${milestone.title}`);
                         const queryWithMilestone = `${searchQuery} milestone:"${milestone.title}" repo:${repoOwnerAndName}`;
-                        yield queryIssues(queryWithMilestone, repoOwnerAndName, miletoneOptionsSpecified, token, issues);
+                        yield queryIssues(queryWithMilestone, repoOwnerAndName, token, issues);
                     }
                 }
                 else {
                     // Get query results
                     const queryWithoutMilestones = `${searchQuery} repo:${repoOwnerAndName}`;
-                    yield queryIssues(queryWithoutMilestones, repoOwnerAndName, miletoneOptionsSpecified, token, issues);
+                    yield queryIssues(queryWithoutMilestones, repoOwnerAndName, token, issues);
                 }
                 // Handle artifacts
                 const issuesDirPath = path.join('.', 'issues');
@@ -20838,14 +20838,16 @@ function run() {
                     fs.rmdirSync(issuesDirPath, { recursive: true });
                 }
                 catch (err) {
-                    console.log(err);
+                    core.debug(err);
                 }
                 yield io.mkdirP(issuesDirPath);
                 const issuesDownloadDirPath = path.join('.', 'issues_download');
                 try {
                     fs.rmdirSync(issuesDownloadDirPath, { recursive: true });
                 }
-                catch (_a) { }
+                catch (err) {
+                    core.debug(err);
+                }
                 yield io.mkdirP(issuesDownloadDirPath);
                 const files = [];
                 for (const issue of issues) {
@@ -20877,12 +20879,12 @@ function run() {
     });
 }
 run();
-function queryIssues(resultingQuery, ownerAndName, miletoneOptionsSpecified, token, issues) {
+function queryIssues(resultingQuery, ownerAndName, token, issues) {
     return __awaiter(this, void 0, void 0, function* () {
         core.debug(`resultingQuery: ${resultingQuery}.`);
-        var pageNum = 1;
-        var isIncomplete = true;
-        var itemsReceived = 0;
+        let pageNum = 1;
+        let isIncomplete = true;
+        let itemsReceived = 0;
         while (isIncomplete) {
             const issueResults = yield axios.default.get('https://api.github.com/search/issues', {
                 headers: {

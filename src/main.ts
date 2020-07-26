@@ -16,14 +16,14 @@ async function run(): Promise<void> {
 
       const repoOwnerAndName: string = core.getInput('repoOwnerAndName');
       core.debug(`Repo Owner/Name: ${repoOwnerAndName}`);
-      const regexp: RegExp = /^[\w-]+\/[\w-]+$/g;
+      const regexp = /^[\w-]+\/[\w-]+$/g;
       if (!regexp.test(repoOwnerAndName)) {
         core.setFailed('Invalid repoOwnerAndName');
         return;
       }
 
       const milestoneStateTmp: string = core.getInput('searchByAssociatedMilestoneState');
-      var milestoneState: "open" | "closed" | "all" | undefined;
+      let milestoneState: "open" | "closed" | "all" | undefined;
       switch (milestoneStateTmp) {
         case "all":
           milestoneState = "all";
@@ -40,7 +40,7 @@ async function run(): Promise<void> {
       core.debug(`Filtering issues with milestoneState: ${milestoneState}`);
 
       const milestoneDueOnTmp: string = core.getInput('searchByAssociatedMilestoneDueDate');
-      var milestoneDueOn: "past" | "today" | "future" | undefined;
+      let milestoneDueOn: "past" | "today" | "future" | undefined;
       switch (milestoneDueOnTmp) {
         case "past":
           milestoneDueOn = "past";
@@ -73,24 +73,24 @@ async function run(): Promise<void> {
           repo: ownerAndName[1]
         });
 
-        var now = new Date();
+        let now = new Date();
 
         for (const milestone of azMilestones.data) {
           if (milestoneDueOn) {
-            const due_on = milestone.due_on ? new Date(milestone.due_on) : undefined;
+            const dueOn = milestone.due_on ? new Date(milestone.due_on) : undefined;
             switch (milestoneDueOn) {
               case "future":
-                if (!due_on || !moment(due_on).isAfter(now, 'day')) {
+                if (!dueOn || !moment(dueOn).isAfter(now, 'day')) {
                   continue;
                 }
                 break;
               case "past":
-                if (!due_on || !moment(due_on).isBefore(now, 'day')) {
+                if (!dueOn || !moment(dueOn).isBefore(now, 'day')) {
                   continue;
                 }
                 break;
               case "today":
-                if (!due_on || !moment(due_on).isSame(now, 'day')) {
+                if (!dueOn || !moment(dueOn).isSame(now, 'day')) {
                   continue;
                 }
                 break;
@@ -100,13 +100,13 @@ async function run(): Promise<void> {
           }
           core.debug(`Searching Issues related to Milestone: ${milestone.title}`);
           const queryWithMilestone = `${searchQuery} milestone:"${milestone.title}" repo:${repoOwnerAndName}`;
-          await queryIssues(queryWithMilestone, repoOwnerAndName, miletoneOptionsSpecified, token, issues);
+          await queryIssues(queryWithMilestone, repoOwnerAndName, token, issues);
         }
       }
       else {
         // Get query results
         const queryWithoutMilestones = `${searchQuery} repo:${repoOwnerAndName}`;
-        await queryIssues(queryWithoutMilestones, repoOwnerAndName, miletoneOptionsSpecified, token, issues);
+        await queryIssues(queryWithoutMilestones, repoOwnerAndName, token, issues);
       }
 
 
@@ -115,13 +115,13 @@ async function run(): Promise<void> {
       const issuesDirPath = path.join('.', 'issues');
       try {
         fs.rmdirSync(issuesDirPath, { recursive: true });
-      } catch (err) { console.log(err) }
+      } catch (err) { core.debug(err) }
       await io.mkdirP(issuesDirPath);
 
       const issuesDownloadDirPath = path.join('.', 'issues_download');
       try {
         fs.rmdirSync(issuesDownloadDirPath, { recursive: true });
-      } catch{ }
+      } catch (err) { core.debug(err) }
       await io.mkdirP(issuesDownloadDirPath);
 
       const files = [];
@@ -157,18 +157,18 @@ async function run(): Promise<void> {
 
 run()
 
-async function queryIssues(resultingQuery: string, ownerAndName: string, miletoneOptionsSpecified: string | undefined, token: string, issues: any[]) {
+async function queryIssues(resultingQuery: string, ownerAndName: string, token: string, issues: {}[]) : Promise<void> {
 
   core.debug(`resultingQuery: ${resultingQuery}.`);
 
-  var pageNum = 1;
-  var isIncomplete = true;
-  var itemsReceived = 0;
+  let pageNum = 1;
+  let isIncomplete = true;
+  let itemsReceived = 0;
 
   while (isIncomplete) {
     const issueResults = await axios.default.get('https://api.github.com/search/issues',
       {
-        headers:{
+        headers: {
           Auth: token
         },
         params: {
