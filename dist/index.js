@@ -20787,7 +20787,7 @@ function run() {
                 ;
                 core.debug(`Filtering issues with milestoneDueOn: ${milestoneDueOn}`);
                 const miletoneOptionsSpecified = milestoneDueOn || milestoneState;
-                if (!miletoneOptionsSpecified && searchQuery.length == 0) {
+                if (!miletoneOptionsSpecified && searchQuery.length === 0) {
                     core.setFailed('Must specify at least one search or milesone filter input.');
                 }
                 const token = core.getInput('repotoken', { required: true });
