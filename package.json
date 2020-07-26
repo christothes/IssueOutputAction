@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "issue-search-output",
+  "version": "0.0.1",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Searches Issues based on configured criteria and outputs the results as json per issue into an Artifact. Stacks with other actions that expect a set of Issues as an Artifact.",
   "main": "lib/main.js",
   "jest": {
     "testPathIgnorePatterns": ["issues","issues_download"]
@@ -23,7 +23,8 @@
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "issues",
+    "artifacts"
   ],
   "author": "Christopher Scott",
   "license": "MIT",

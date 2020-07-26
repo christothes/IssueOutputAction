@@ -20841,14 +20841,6 @@ function run() {
                     core.debug(err);
                 }
                 yield io.mkdirP(issuesDirPath);
-                const issuesDownloadDirPath = path.join('.', 'issues_download');
-                try {
-                    fs.rmdirSync(issuesDownloadDirPath, { recursive: true });
-                }
-                catch (err) {
-                    core.debug(err);
-                }
-                yield io.mkdirP(issuesDownloadDirPath);
                 const files = [];
                 for (const issue of issues) {
                     core.debug(`${JSON.stringify(issue.html_url)}`);

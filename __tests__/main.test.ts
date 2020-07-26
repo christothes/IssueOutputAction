@@ -18,7 +18,6 @@ test('wait 500 ms', async () => {
 
 // shows how the runner will run a javascript action with env / stdout protocol
 test('test runs', () => {
-  //process.env['INPUT_SEARCHQUERY'] = 'milestone:"August Release" repo:christothes/IssueOutputAction'
   process.env['INPUT_SEARCHQUERY'] = ' event hubs is:open'
   process.env['INPUT_REPOOWNERANDNAME'] = 'Azure/azure-sdk-for-net'
   process.env['INPUT_searchByAssociatedMilestoneState'] = 'open'

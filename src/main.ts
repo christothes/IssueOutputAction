@@ -118,12 +118,6 @@ async function run(): Promise<void> {
       } catch (err) { core.debug(err) }
       await io.mkdirP(issuesDirPath);
 
-      const issuesDownloadDirPath = path.join('.', 'issues_download');
-      try {
-        fs.rmdirSync(issuesDownloadDirPath, { recursive: true });
-      } catch (err) { core.debug(err) }
-      await io.mkdirP(issuesDownloadDirPath);
-
       const files = [];
 
       for (const issue of issues) {
