@@ -1,16 +1,25 @@
 name: 'Query Issues Output'
-description: 'Executes a query to output a set of Issues to disk for processing'
+description: 'Searches Issues based on configured criteria and outputs the results as json per issue into an Artifact. Stacks with other actions that expect a set of Issues as an Artifact.'
 author: 'Christopher Scott (christothes)'
+branding:
+  icon: 'arrow-down-right'
+  color: 'blue'
 inputs:
-  milestone:
-    description: 'Filter to Issues associated to a milestone number or name. Specify * to indicate all Issues associated with any Milestone'
-    default: 'null'
-  state:
-    description: 'Filter to Issues in the given state. (open, closed, *)'
-    default: 'open'
-  notmodifiedfor:
-    description: 'Filter to Issues not modified in the last n minutes'
-    default: 'null'
+  repotoken:
+    description: 'The github API token, if not he default'
+    required: true
+  repoOwnerAndName:
+    description: ''
+    required: true
+  searchquery:
+    description: 'A query to search for Issues. See https://docs.github.com/en/github/searching-for-information-on-github/searching-issues-and-pull-requests'
+    default: ''
+  searchByAssociatedMilestoneState:
+    description: 'Filters queried Issues to those associated with Milestones in a given state: <open|closed|all> .'
+    default: ''
+  searchByAssociatedMilestoneDueDate:
+    description: 'Filters queried to those associated with Milestones with a due date either past due, due today, or due in the future: <past|today|future> .'
+    default: ''
 runs:
   using: 'node12'
   main: 'dist/index.js'

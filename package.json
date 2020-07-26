@@ -1,9 +1,12 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "issue-search-output",
+  "version": "0.0.1",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Searches Issues based on configured criteria and outputs the results as json per issue into an Artifact. Stacks with other actions that expect a set of Issues as an Artifact.",
   "main": "lib/main.js",
+  "jest": {
+    "testPathIgnorePatterns": ["issues","issues_download"]
+  },
   "scripts": {
     "build": "tsc",
     "format": "prettier --write **/*.ts",
@@ -15,17 +18,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/christothes/IssueOutputAction.git"
   },
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "issues",
+    "artifacts"
   ],
-  "author": "YourNameOrOrganization",
+  "author": "Christopher Scott",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.0"
+    "@actions/artifact": "^0.3.2",
+    "@actions/core": "^1.2.0",
+    "@actions/github": "^4.0.0",
+    "@actions/io": "^1.0.2",
+    "axios": "^0.19.2",
+    "moment": "^2.27.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
