@@ -4,7 +4,7 @@ author: 'Christopher Scott (christothes)'
 inputs:
   repotoken:
     description: 'The github API token, if not he default'
-    default: ${{ secrets.GITHUB_TOKEN }}
+    default: ''
   repoOwnerAndName:
     description: ''
     default: '${{ github.repository }}'
