@@ -20865,14 +20865,7 @@ function run() {
                 };
                 const uploadResult = yield artifactClient.uploadArtifact(artifactName, files, rootDirectory, options);
                 core.debug(`uploaded ${uploadResult.artifactItems.length} artifacts...`);
-                yield artifactClient.downloadArtifact(artifactName, issuesDownloadDirPath);
-                for (const fileName of fs.readdirSync(issuesDownloadDirPath)) {
-                    const filePath = path.join(issuesDownloadDirPath, fileName);
-                    core.debug(`Found file: ${filePath}`);
-                    const f = fs.readFileSync(filePath, "utf8");
-                    const issue = JSON.parse(f);
-                    core.debug(`Containing Issue: ${issue.number}:${issue.title}`);
-                }
+                core.setOutput("issuesArtifact", artifactName);
             }
             catch (err) {
                 core.debug(err);
