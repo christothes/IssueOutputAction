@@ -34,7 +34,7 @@
     "@actions/github": "^4.0.0",
     "@actions/io": "^1.0.2",
     "axios": "^0.19.2",
-    "moment": "^2.27.0"
+    "moment": "^2.29.2"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
